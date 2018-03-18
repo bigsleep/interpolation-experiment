@@ -33,6 +33,48 @@ void main()
 }
 </script>
 
+<script id="vertex_quad" type="x-shader/x-vertex">
+attribute float idx;
+attribute float ui;
+attribute float uj;
+varying vec3 L;
+varying vec3 v;
+varying vec3 w;
+
+void main()	{
+    L = vec3(0.0);
+    if (idx == 0.0) {
+        L[0] = 1.0;
+        v[0] = ui;
+        w[0] = uj;
+    } else if (idx == 1.0) {
+        L[1] = 1.0;
+        v[1] = ui;
+        w[1] = uj;
+    } else {
+        L[2] = 1.0;
+        v[2] = ui;
+        w[2] = uj;
+    }
+    gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+}
+</script>
+
+<script id="fragment_quad" type="x-shader/x-fragment">
+varying vec3 L;
+varying vec3 v;
+varying vec3 w;
+
+void main()
+{
+    float u = 0.0;
+    u += v[0] * (2.0 * L[0] - 1.0) + 4.0 * w[0] * L[1];
+    u += v[1] * (2.0 * L[1] - 1.0) + 4.0 * w[1] * L[2];
+    u += v[2] * (2.0 * L[2] - 1.0) + 4.0 * w[2] * L[0];
+    gl_FragColor = vec4(vec3(u), 1.0);
+}
+</script>
+
 <div id="root" class="root">
 </div>
 

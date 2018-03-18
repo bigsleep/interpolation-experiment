@@ -68,13 +68,23 @@ class App {
             0.0, 1.0, 2.0,
             0.0, 1.0, 2.0,
         ]);
+        const uis = new Float32Array([
+            0.0, 0.0, 0.0,
+            0.0, 0.0, 0.0,
+        ]);
+        const ujs = new Float32Array([
+            0.4, 0.4, 0.8,
+            0.4, 0.4, 0.8,
+        ]);
         this.three.geometry.addAttribute('position', new THREE.BufferAttribute(positions, 3));
         this.three.geometry.addAttribute('idx', new THREE.BufferAttribute(is, 1));
+        this.three.geometry.addAttribute('ui', new THREE.BufferAttribute(uis, 1));
+        this.three.geometry.addAttribute('uj', new THREE.BufferAttribute(ujs, 1));
 
         this.three.material = new THREE.ShaderMaterial({
             uniforms: this.state.uniforms,
-            vertexShader: document.getElementById('vertex_shader').textContent,
-            fragmentShader: document.getElementById('fragment_shader').textContent,
+            vertexShader: document.getElementById('vertex_quad').textContent,
+            fragmentShader: document.getElementById('fragment_quad').textContent,
         });
 
         this.three.material.side = THREE.DoubleSide;
