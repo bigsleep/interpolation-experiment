@@ -1,0 +1,52 @@
+<!DOCTYPE HTML>
+<head>
+<meta charset="UTF-8">
+<title>interpolation-experiment</title>
+</head>
+
+<body>
+
+<script id="vertex_shader" type="x-shader/x-vertex">
+attribute float idx;
+varying vec3 L;
+
+void main()	{
+    L = vec3(0.0);
+    if (idx == 0.0) {
+        L[0] = 1.0;
+    } else if (idx == 1.0) {
+        L[1] = 1.0;
+    } else {
+        L[2] = 1.0;
+    }
+    gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+}
+</script>
+
+<script id="fragment_shader" type="x-shader/x-fragment">
+varying vec3 L;
+
+void main()
+{
+    float a = 0.1;
+    gl_FragColor = (L[0] <= a || L[1] <= a || L[2] <= a) ? vec4(1.0, 0.0, 0.0, 1.0) : vec4(1.0);
+}
+</script>
+
+<div id="root" class="root">
+</div>
+
+<script type="text/javascript" src="dist/bundle.js" charset="utf-8"></script>
+
+<style>
+    html, body, div, canvas {
+        height: 100%;
+        width: 100%;
+        border: 0;
+        padding: 0;
+        margin: 0;
+        display: flex;
+    }
+</style>
+
+</body>
